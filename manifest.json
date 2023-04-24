@@ -1,0 +1,6 @@
+{
+  "manifest_version": 3,
+  "name": "Simple Lorem Ipsum",
+  "version": "1.0",
+  "description": "Simple Lorem Ipsum generator for easy access to dummy text during user testing."
+}
