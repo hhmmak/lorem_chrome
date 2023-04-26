@@ -7,9 +7,13 @@ const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut',
 const start = document.getElementById('startWithLorem')
 const containerWordCount = document.getElementById('resultWordCount')
 const containerSentence = document.getElementById('resultSentence')
+const containerParagraph = document.getElementById('resultParagraph')
 const buttonWordCount = document.getElementById('buttonWordCount')
 const buttonSentence = document.getElementById('buttonSentence')
+const buttonParagraph = document.getElementById('buttonParagraph')
 
+
+//.. helper functions
 const randomIdx = (arrLength) => {
 
   return Math.floor(Math.random() * arrLength)
@@ -22,6 +26,22 @@ const randomWord = (upper=false) => {
   return word[idx];
 }
 
+//.. generators
+
+const generateParagraph = (n=7) => {
+  let paragraph = [];
+  let maxLength = 1000;
+  let maxSentence = n;
+
+  while (maxLength > 0 && maxSentence > 0){
+    let tempSentence = generateSentence();
+    paragraph.push(tempSentence);
+    maxLength -= tempSentence.length;
+    maxSentence --;
+  }
+
+  return paragraph.join('');
+}
 
 const generateSentence = (n=20) => {
   let sentence = []
@@ -70,4 +90,8 @@ buttonWordCount.addEventListener("click", () => {
 
 buttonSentence.addEventListener("click", () => {
   containerSentence.innerText = generateSentence();
+})
+
+buttonParagraph.addEventListener("click", () => {
+  containerParagraph.innerText = generateParagraph();
 })
