@@ -31,24 +31,12 @@ const randomWord = (upper=false) => {
 
 //.. generators
 
-const generateText = (n=100) => {
-
-  let result = start.checked ? [... beginner, symbol[Math.round(Math.random())] ] : [randomWord(true)];
-  let count = start.checked? n - 8 : n - 1;
-
-  for (let i = 0; i < count; i ++){
-    result.push( randomWord() );
-  }
-
-  return result.join(' ');
-}
-
-const generateSentence = (n=20) => {
+const generateSentence = (lipsum=false, n=20) => {
   let sentence = []
   let maxPhrase = 3;
 
   while (maxPhrase > 0 && sentence[sentence.length - 1] !== '. '){  
-    let count = 20;
+    let count = n;
     sentence.push(' ')
     while (count > 0 && sentence[sentence.length - 1] === ' '){
       let idx = Math.min(2, randomIdx(count));
@@ -64,20 +52,29 @@ const generateSentence = (n=20) => {
     sentence.push('. ')
   }
   
-  // concat random word
+  // concat random word and add Lorem Ipsum start
   sentence = sentence.map(str => randomWord() + str)
-  sentence[0] = sentence[0][0].toUpperCase() + sentence[0].slice(1)
+  if (lipsum) {
+    sentence.unshift(...beginner)
+  } else {
+    sentence[0] = sentence[0][0].toUpperCase() + sentence[0].slice(1)
+  }
   return sentence.join('');
 }
 
 
-  const generateParagraph = (n=7) => {
+  const generateParagraph = (lipsum=false, n=7) => {
   let paragraph = [];
   let maxLength = 1000;
   let maxSentence = n;
+  let tempSentence = '';
 
   while (maxLength > 0 && maxSentence > 0){
-    let tempSentence = generateSentence();
+    if (maxSentence === n && lipsum) {
+      tempSentence = generateSentence(lipsum);
+    } else {
+      tempSentence = generateSentence();
+    }
     paragraph.push(tempSentence);
     maxLength -= tempSentence.length;
     maxSentence --;
@@ -86,9 +83,10 @@ const generateSentence = (n=20) => {
   return paragraph.join('');
 }
 
-const generateArticle = (n=5) => {
+const generateArticle = (lipsum=false, n=5) => {
   let article = new Array(n);
-  for (let i = 0; i < n; i++){
+  article[0] = generateParagraph(lipsum);
+  for (let i = 1; i < n; i++){
     article[i] = generateParagraph();
   }
 
@@ -96,18 +94,15 @@ const generateArticle = (n=5) => {
 }
 
 //.. button event listeners
-buttonWordCount.addEventListener("click", () => {
-  containerWordCount.innerText = generateText(20);
-})
 
 buttonSentence.addEventListener("click", () => {
-  containerSentence.innerText = generateSentence();
+  containerSentence.innerText = generateSentence(start.checked);
 })
 
 buttonParagraph.addEventListener("click", () => {
-  containerParagraph.innerText = generateParagraph();
+  containerParagraph.innerText = generateParagraph(start.checked);
 })
 
 buttonArticle.addEventListener("click", () => {
-  containerArticle.innerText = generateArticle();
+  containerArticle.innerText = generateArticle(start.checked);
 })
