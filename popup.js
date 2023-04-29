@@ -4,7 +4,8 @@ const beginner = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit']
 const symbol = ['. ', ', ', ' ']
 const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut', 'magna', 'sed', 'pulvinar', 'ultricies', 
   'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'ut', 'aliquip', 'ex', 'ea', 'commodo', 'consequat',
-  'dolore', 'eu', 'fugiat', 'nulla', 'pariatur', 'in', 'voluptate', 'velit', 'esse', 'nunc', 'eros', 'quis', 'urna']
+  'dolore', 'eu', 'fugiat', 'nulla', 'pariatur', 'in', 'voluptate', 'velit', 'esse', 'nunc', 'eros', 'quis', 'urna',
+  'sunt', 'sint', 'duis', 'tempor', 'velaliquam', 'suscipit', 'doming', 'tempuribud', 'harmud', 'dignissim', 'providerent']
 
 //.. DOM elements
 const start = document.getElementById('startWithLorem')
@@ -14,6 +15,7 @@ const containerParagraph = document.getElementById('resultParagraph')
 const containerArticle = document.getElementById('resultArticle')
 const buttonWordCount = document.getElementById('buttonWordCount')
 const buttonSentence = document.getElementById('buttonSentence')
+const buttonTitle = document.getElementById('buttonTitle')
 const buttonParagraph = document.getElementById('buttonParagraph')
 const buttonArticle = document.getElementById('buttonArticle')
 
@@ -24,14 +26,20 @@ const randomIdx = (arrLength) => {
   return Math.floor(Math.random() * arrLength)
 }
 
-const randomWord = (upper=false) => {
+const randomWord = () => {
   let idx = randomIdx(word.length);
   return word[idx];
+}
+
+const capHead = (str) => {
+  return str[0].toUpperCase() + str.slice(1)
 }
 
 //.. generators
 
 const generateSentence = (lipsum=false, n=20) => {
+  if (n < 1)  return '';
+
   let sentence = []
   let maxPhrase = 3;
 
@@ -57,13 +65,30 @@ const generateSentence = (lipsum=false, n=20) => {
   if (lipsum) {
     sentence.unshift(...beginner)
   } else {
-    sentence[0] = sentence[0][0].toUpperCase() + sentence[0].slice(1)
+    sentence[0] = capHead(sentence[0]);
   }
   return sentence.join('');
 }
 
+const generateTitle = (lipsum=false, n=10) => {
+  let title = lipsum ? ["Lorem", "Ipsum"] : []
 
-  const generateParagraph = (lipsum=false, n=7) => {
+  let count = Math.max(2, randomIdx(n));
+  while (title.length <= count) {
+    let word = randomWord();
+    if (title.length > 1 && word.length < 4 && randomIdx(3)){
+      title.push( word );
+    } else {
+      title.push(capHead(word));
+    }
+  }
+
+  return title.join(' ');
+}
+
+const generateParagraph = (lipsum=false, n=7) => {
+  if (n < 1)  return '';
+
   let paragraph = [];
   let maxLength = 1000;
   let maxSentence = n;
@@ -84,6 +109,8 @@ const generateSentence = (lipsum=false, n=20) => {
 }
 
 const generateArticle = (lipsum=false, n=5) => {
+  if (n < 1)  return '';
+
   let article = new Array(n);
   article[0] = generateParagraph(lipsum);
   for (let i = 1; i < n; i++){
@@ -97,6 +124,10 @@ const generateArticle = (lipsum=false, n=5) => {
 
 buttonSentence.addEventListener("click", () => {
   containerSentence.innerText = generateSentence(start.checked);
+})
+
+buttonTitle.addEventListener("click", () => {
+  containerSentence.innerText = generateTitle(start.checked);
 })
 
 buttonParagraph.addEventListener("click", () => {
