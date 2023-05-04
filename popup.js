@@ -16,10 +16,7 @@ const numSentence = document.getElementById('numSentence')
 const numParagraph = document.getElementById('numParagraph')
 
 //container
-const containerWordCount = document.getElementById('resultWordCount')
-const containerSentence = document.getElementById('resultSentence')
-const containerParagraph = document.getElementById('resultParagraph')
-const containerArticle = document.getElementById('resultArticle')
+const container = document.getElementById('result')
 
 // button
 const buttonWordCount = document.getElementById('buttonWordCount')
@@ -96,7 +93,6 @@ const generateTitle = (lipsum=false, n=10) => {
 }
 
 const generateParagraph = (lipsum=false, n=7) => {
-  console.log(n)
   if (n < 1)  return '';
 
   let paragraph = [];
@@ -133,17 +129,17 @@ const generateArticle = (lipsum=false, n=5) => {
 //.. button event listeners
 
 buttonSentence.addEventListener("click", () => {
-  containerSentence.innerText = generateSentence(start.checked);
+  container.innerText = generateSentence(start.checked);
 })
 
 buttonTitle.addEventListener("click", () => {
-  containerSentence.innerText = generateTitle(start.checked);
+  container.innerText = generateTitle(start.checked);
 })
 
 buttonParagraph.addEventListener("click", () => {
-  containerParagraph.innerText = generateParagraph(start.checked, numSentence.valueAsNumber);
+  container.innerText = generateParagraph(start.checked, numSentence.valueAsNumber);
 })
 
 buttonArticle.addEventListener("click", () => {
-  containerArticle.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
+  container.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
 })
