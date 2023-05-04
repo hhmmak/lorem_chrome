@@ -2,19 +2,52 @@
   /* basic reset for whitespaces */
   margin: 0px;
   padding: 0px;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 300;
+  font-size: 0.9rem;
 }
 
 body {
-  width: 400px;
-  padding: 1rem;
+  width: 367px;
+  padding: 0.8rem;
+  border: 2px solid black;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+button {
+  width: 11rem;
+  padding: 0.2rem 0;
+}
+
+input {
+  padding: 0.2rem 0.1rem;
+  text-indent: 0.2rem;
+}
+
+.font-lorem {
+  font-weight: 500;
+  font-style: italic;
+}
+
+.generator-wrapper {
+  margin: 1rem 0;
+}
+
+.option-wrapper {
+  margin: 0.8rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .resultWrapper {
-  margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #aaaaaa;
   height: 150px;
-  width: 90%;
+  width: 95%;
   overflow-y: auto;
   white-space: pre-wrap;
 }

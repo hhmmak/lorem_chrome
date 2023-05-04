@@ -6,38 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;1,300;1,400;1,500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./popup.css" />
   <title>Lorem Ipsum</title>
 </head>
 <body>
-  <h1>Lorem Ipsum</h1>
+  <h1 class="font-lorem">Lorem Ipsum</h1>
   <div class="generator-wrapper">
-    <div id="lorem-option">
+    <div id="lorem-option" class="option-wrapper">
       <input type="checkbox" id="startWithLorem">
-      <label for="startWithLorem">Start with "Lorem Ipusum"</label>
+      <label for="startWithLorem">
+        Start with "
+        <span class="font-lorem">Lorem Ipusum</span>
+        "
+      </label>
     </div>
     <div id="sentence-option" class="option-wrapper">
       <button id="buttonSentence" type="submit">Generate one Sentence</button>
-      <button id="buttonTitle">Generate Title</button>
+      <button id="buttonTitle">Generate a Title</button>
     </div>
     <div id="paragraph-option" class="option-wrapper">
       <button id="buttonParagraph">Generate one Paragraph</button>
       <div>
         <input type="number" min="1" max="20" value="7" name="numSentence" id="numSentence">
-        <label for="numSentence">sentence(s) per paragraph</label>
+        <label for="numSentence" >sentence(s) per paragraph</label>
       </div>
     </div>
     <div id="article-option" class="option-wrapper">
       <button id="buttonArticle">Generate one Article</button>
       <div>
         <input type="number" min="1" max="10" value="5" name="numParagraph" id="numParagraph">
-        <label for="numParagraph">paragaph(s) per article</label>
+        <label for="numParagraph" >paragaph(s) per article</label>
       </div>
     </div>
   </div>
-  <div id="result" class="resultWrapper"></div>
+  <div id="result" class="resultWrapper font-narrow"></div>
 
   <script src="./popup.js" type="module"></script>
 </body>
