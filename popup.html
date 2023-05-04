@@ -14,13 +14,23 @@
     <label for="startWithLorem">Start with "Lorem Ipusum"</label>
   </div>
 
-  <button id="buttonSentence">Generate Sentence</button>
-  <button id="buttonTitle">Generate Title</button>
-  <div id="resultSentence" class="resultWrapper"></div>
-  <button id="buttonParagraph">Generate Paragraph</button>
-  <div id="resultParagraph" class="resultWrapper"></div>
-  <button id="buttonArticle">Generate Article</button>
-  <div id="resultArticle" class="resultWrapper"></div>
+  <div id="sentence-generator">
+    <button id="buttonSentence" type="submit">Generate Sentence</button>
+    <button id="buttonTitle">Generate Title</button>
+    <div id="resultSentence" class="resultWrapper"></div>
+  </div>
+  <div id="paragraph-generator">
+    <input type="number" min="1" max="20" value="7" name="numSentence" id="numSentence">
+    <label for="numSentence">sentence(s) per paragraph</label>
+    <button id="buttonParagraph">Generate Paragraph</button>
+    <div id="resultParagraph" class="resultWrapper"></div>
+  </div>
+  <div id="article-generator">
+    <input type="number" min="1" max="10" value="5" name="numParagraph" id="numParagraph">
+    <label for="numParagraph">paragaph(s) per article</label>
+    <button id="buttonArticle">Generate Article</button>
+    <div id="resultArticle" class="resultWrapper"></div>
+  </div>
 
   <script src="./popup.js" type="module"></script>
 </body>

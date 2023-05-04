@@ -1,5 +1,6 @@
 
 //.. dictionary
+
 const beginner = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit']
 const symbol = ['. ', ', ', ' ']
 const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut', 'magna', 'sed', 'pulvinar', 'ultricies', 
@@ -8,11 +9,19 @@ const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut',
   'sunt', 'sint', 'duis', 'tempor', 'velaliquam', 'suscipit', 'doming', 'tempuribud', 'harmud', 'dignissim', 'providerent']
 
 //.. DOM elements
+
+// user input
 const start = document.getElementById('startWithLorem')
+const numSentence = document.getElementById('numSentence')
+const numParagraph = document.getElementById('numParagraph')
+
+//container
 const containerWordCount = document.getElementById('resultWordCount')
 const containerSentence = document.getElementById('resultSentence')
 const containerParagraph = document.getElementById('resultParagraph')
 const containerArticle = document.getElementById('resultArticle')
+
+// button
 const buttonWordCount = document.getElementById('buttonWordCount')
 const buttonSentence = document.getElementById('buttonSentence')
 const buttonTitle = document.getElementById('buttonTitle')
@@ -87,6 +96,7 @@ const generateTitle = (lipsum=false, n=10) => {
 }
 
 const generateParagraph = (lipsum=false, n=7) => {
+  console.log(n)
   if (n < 1)  return '';
 
   let paragraph = [];
@@ -131,9 +141,9 @@ buttonTitle.addEventListener("click", () => {
 })
 
 buttonParagraph.addEventListener("click", () => {
-  containerParagraph.innerText = generateParagraph(start.checked);
+  containerParagraph.innerText = generateParagraph(start.checked, numSentence.valueAsNumber);
 })
 
 buttonArticle.addEventListener("click", () => {
-  containerArticle.innerText = generateArticle(start.checked);
+  containerArticle.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
 })
