@@ -4,33 +4,40 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="./popup.css" />
   <title>Lorem Ipsum</title>
 </head>
 <body>
   <h1>Lorem Ipsum</h1>
-  <div>
-    <input type="checkbox" id="startWithLorem">
-    <label for="startWithLorem">Start with "Lorem Ipusum"</label>
+  <div class="generator-wrapper">
+    <div id="lorem-option">
+      <input type="checkbox" id="startWithLorem">
+      <label for="startWithLorem">Start with "Lorem Ipusum"</label>
+    </div>
+    <div id="sentence-option" class="option-wrapper">
+      <button id="buttonSentence" type="submit">Generate one Sentence</button>
+      <button id="buttonTitle">Generate Title</button>
+    </div>
+    <div id="paragraph-option" class="option-wrapper">
+      <button id="buttonParagraph">Generate one Paragraph</button>
+      <div>
+        <input type="number" min="1" max="20" value="7" name="numSentence" id="numSentence">
+        <label for="numSentence">sentence(s) per paragraph</label>
+      </div>
+    </div>
+    <div id="article-option" class="option-wrapper">
+      <button id="buttonArticle">Generate one Article</button>
+      <div>
+        <input type="number" min="1" max="10" value="5" name="numParagraph" id="numParagraph">
+        <label for="numParagraph">paragaph(s) per article</label>
+      </div>
+    </div>
   </div>
-
-  <div id="sentence-generator">
-    <button id="buttonSentence" type="submit">Generate Sentence</button>
-    <button id="buttonTitle">Generate Title</button>
-    <div id="resultSentence" class="resultWrapper"></div>
-  </div>
-  <div id="paragraph-generator">
-    <input type="number" min="1" max="20" value="7" name="numSentence" id="numSentence">
-    <label for="numSentence">sentence(s) per paragraph</label>
-    <button id="buttonParagraph">Generate Paragraph</button>
-    <div id="resultParagraph" class="resultWrapper"></div>
-  </div>
-  <div id="article-generator">
-    <input type="number" min="1" max="10" value="5" name="numParagraph" id="numParagraph">
-    <label for="numParagraph">paragaph(s) per article</label>
-    <button id="buttonArticle">Generate Article</button>
-    <div id="resultArticle" class="resultWrapper"></div>
-  </div>
+  <div id="result" class="resultWrapper"></div>
 
   <script src="./popup.js" type="module"></script>
 </body>
