@@ -24,6 +24,7 @@ const buttonSentence = document.getElementById('buttonSentence')
 const buttonTitle = document.getElementById('buttonTitle')
 const buttonParagraph = document.getElementById('buttonParagraph')
 const buttonArticle = document.getElementById('buttonArticle')
+const buttonCopy = document.getElementById('buttonCopy')
 
 
 //.. helper functions
@@ -39,6 +40,18 @@ const randomWord = () => {
 
 const capHead = (str) => {
   return str[0].toUpperCase() + str.slice(1)
+}
+
+//.. copy function
+const copyContent = async () => {
+  let text = container.innerText
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log('Content copied to clipboard');
+    console.log(text)
+  } catch (err) {
+    console.error('Failed to copy: ', err);
+  }
 }
 
 //.. generators
@@ -143,3 +156,5 @@ buttonParagraph.addEventListener("click", () => {
 buttonArticle.addEventListener("click", () => {
   container.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
 })
+
+buttonCopy.addEventListener("click", copyContent)

@@ -24,25 +24,28 @@
       </label>
     </div>
     <div id="sentence-option" class="option-wrapper">
-      <button id="buttonSentence" type="submit">Generate one Sentence</button>
+      <button id="buttonSentence" type="submit">Generate Sentence</button>
       <button id="buttonTitle">Generate a Title</button>
     </div>
     <div id="paragraph-option" class="option-wrapper">
-      <button id="buttonParagraph">Generate one Paragraph</button>
+      <button id="buttonParagraph">Generate Paragraph</button>
       <div>
         <input type="number" min="1" max="20" value="7" name="numSentence" id="numSentence">
         <label for="numSentence" >sentence(s) per paragraph</label>
       </div>
     </div>
     <div id="article-option" class="option-wrapper">
-      <button id="buttonArticle">Generate one Article</button>
+      <button id="buttonArticle">Generate Article</button>
       <div>
         <input type="number" min="1" max="10" value="5" name="numParagraph" id="numParagraph">
         <label for="numParagraph" >paragaph(s) per article</label>
       </div>
     </div>
   </div>
-  <div id="result" class="resultWrapper font-narrow"></div>
+  <div class="result-wrapper">
+    <div id="result" class="result font-narrow"></div>
+    <button id="buttonCopy">Copy Text</button>
+  </div>
 
   <script src="./popup.js" type="module"></script>
 </body>
