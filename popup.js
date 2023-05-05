@@ -42,6 +42,16 @@ const capHead = (str) => {
   return str[0].toUpperCase() + str.slice(1)
 }
 
+//.. error warning
+const warning = (str) => {
+  let el = document.createElement('span');
+  el.innerText = str;
+  el.className = 'warning';
+  console.log("Error: " + str);
+  container.innerText = '';
+  container.appendChild(el);
+}
+
 //.. copy function
 const copyContent = async () => {
   let text = container.innerText
@@ -106,7 +116,7 @@ const generateTitle = (lipsum=false, n=10) => {
 }
 
 const generateParagraph = (lipsum=false, n=7) => {
-  if (n < 1)  return '';
+  if (n < 1 || n > 20)  return 'Number of sentences per paragraph is limited to 1 to 20.';
 
   let paragraph = [];
   let maxLength = 1000;
@@ -128,7 +138,7 @@ const generateParagraph = (lipsum=false, n=7) => {
 }
 
 const generateArticle = (lipsum=false, n=5) => {
-  if (n < 1)  return '';
+  if (n < 1 || n > 10)  return 'Number of paragraphs per article is limited to 1 to 10.';
 
   let article = new Array(n);
   article[0] = generateParagraph(lipsum);
@@ -150,11 +160,17 @@ buttonTitle.addEventListener("click", () => {
 })
 
 buttonParagraph.addEventListener("click", () => {
-  container.innerText = generateParagraph(start.checked, numSentence.valueAsNumber);
+  if (numSentence.valueAsNumber < 1 || numSentence.valueAsNumber > 20)  
+    warning('Number of sentences per paragraph is limited to 1 to 20.');
+  else  
+    container.innerText = generateParagraph(start.checked, numSentence.valueAsNumber);
 })
 
 buttonArticle.addEventListener("click", () => {
-  container.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
+  if (numParagraph.valueAsNumber < 1 || numParagraph.valueAsNumber > 10)  
+  warning('Number of paragraphs per article is limited to 1 to 10.');
+  else 
+    container.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
 })
 
 buttonCopy.addEventListener("click", copyContent)
