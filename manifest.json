@@ -5,5 +5,8 @@
   "description": "Simple Lorem Ipsum generator for easy access to dummy text during user testing.",
   "action": {
     "default_popup": "popup.html"
-  }
+  },
+  "permissions": [
+    "clipboardWrite"
+  ]
 }
