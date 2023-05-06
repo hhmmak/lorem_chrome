@@ -6,8 +6,8 @@
   "icons": {
     "16": "images/icon-81.png",
     "32": "images/icon-81.png",
-    "48": "images/icon-81.png",
-    "128": "images/icon-212.png"
+    "48": "images/icon-128.png",
+    "128": "images/icon-128.png"
   },
   "action": {
     "default_popup": "popup.html"
