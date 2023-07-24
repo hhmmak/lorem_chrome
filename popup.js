@@ -11,7 +11,7 @@ const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut',
 //.. DOM elements
 
 // user input
-const start = document.getElementById('startWithLorem')
+const checkboxLipsum = document.getElementById('startWithLorem')
 const numSentence = document.getElementById('numSentence')
 const numParagraph = document.getElementById('numParagraph')
 
@@ -25,6 +25,38 @@ const buttonTitle = document.getElementById('buttonTitle')
 const buttonParagraph = document.getElementById('buttonParagraph')
 const buttonArticle = document.getElementById('buttonArticle')
 const buttonCopy = document.getElementById('buttonCopy')
+const buttonDefault = document.getElementById('buttonDefault')
+
+//.. set defaults functions
+
+chrome.storage.local.get(["lorem-chrome-lipsum"])
+  .then((res) => {
+    checkboxLipsum.checked = res["lorem-chrome-lipsum"] === "true"
+  })
+  .catch((err) => console.error(err))
+
+chrome.storage.local.get(["lorem-chrome-para"])
+  .then((res) => {
+    numSentence.value = parseInt(res["lorem-chrome-para"]);
+  })
+  .catch((err) => console.error(err))
+
+chrome.storage.local.get(["lorem-chrome-article"])
+  .then((res) => {
+    numParagraph.value = parseInt(res["lorem-chrome-article"]);
+  })
+  .catch((err) => console.error(err))
+
+buttonDefault.addEventListener(("click"), () => {
+  chrome.storage.local.set({
+    "lorem-chrome-lipsum": "false", 
+    "lorem-chrome-para": "7", 
+    "lorem-chrome-article": "5"
+  })
+  checkboxLipsum.checked = false
+  numSentence.value = "7"
+  numParagraph.value = "5"
+})
 
 
 //.. helper functions
@@ -47,7 +79,7 @@ const warning = (str) => {
   let el = document.createElement('span');
   el.innerText = str;
   el.className = 'warning';
-  console.log("Error: " + str);
+  console.error("Error: " + str);
   container.innerText = '';
   container.appendChild(el);
 }
@@ -57,8 +89,7 @@ const copyContent = async () => {
   let text = container.innerText
   try {
     await navigator.clipboard.writeText(text);
-    console.log('Content copied to clipboard');
-    console.log(text)
+    console.log('Content copied to clipboard: ', text);
   } catch (err) {
     console.error('Failed to copy: ', err);
   }
@@ -149,28 +180,45 @@ const generateArticle = (lipsum=false, n=5) => {
   return article.join('\n\n');
 }
 
+//.. checkbox/input event listeners
+
+checkboxLipsum.addEventListener("click", () => {
+  chrome.storage.local.set(
+    {"lorem-chrome-lipsum": (checkboxLipsum.checked).toString()},
+    () => {
+      chrome.storage.local.get(["lorem-chrome-lipsum"])
+    }
+  );
+})
+
+
+
 //.. button event listeners
 
 buttonSentence.addEventListener("click", () => {
-  container.innerText = generateSentence(start.checked);
+  container.innerText = generateSentence(checkboxLipsum.checked);
 })
 
 buttonTitle.addEventListener("click", () => {
-  container.innerText = generateTitle(start.checked);
+  container.innerText = generateTitle(checkboxLipsum.checked);
 })
 
 buttonParagraph.addEventListener("click", () => {
-  if (numSentence.valueAsNumber < 1 || numSentence.valueAsNumber > 20)  
+  if (numSentence.valueAsNumber < 1 || numSentence.valueAsNumber > 20) { 
     warning('Number of sentences per paragraph is limited to 1 to 20.');
-  else  
-    container.innerText = generateParagraph(start.checked, numSentence.valueAsNumber);
+  } else {
+    chrome.storage.local.set({"lorem-chrome-para": numSentence.value})
+    container.innerText = generateParagraph(checkboxLipsum.checked, numSentence.valueAsNumber);
+  }
 })
 
 buttonArticle.addEventListener("click", () => {
-  if (numParagraph.valueAsNumber < 1 || numParagraph.valueAsNumber > 10)  
-  warning('Number of paragraphs per article is limited to 1 to 10.');
-  else 
-    container.innerText = generateArticle(start.checked, numParagraph.valueAsNumber);
+  if (numParagraph.valueAsNumber < 1 || numParagraph.valueAsNumber > 10) {  
+    warning('Number of paragraphs per article is limited to 1 to 10.');
+  } else {
+    chrome.storage.local.set({"lorem-chrome-article": numParagraph.value})
+    container.innerText = generateArticle(checkboxLipsum.checked, numParagraph.valueAsNumber);
+  }
 })
 
 buttonCopy.addEventListener("click", copyContent)
