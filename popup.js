@@ -31,21 +31,18 @@ const buttonDefault = document.getElementById('buttonDefault')
 
 chrome.storage.local.get(["lorem-chrome-lipsum"])
   .then((res) => {
-    console.log("start: ", res["lorem-chrome-lipsum"])
     checkboxLipsum.checked = res["lorem-chrome-lipsum"] === "true"
   })
   .catch((err) => console.error(err))
 
 chrome.storage.local.get(["lorem-chrome-para"])
   .then((res) => {
-    console.log("start: ", res["lorem-chrome-para"]);
     numSentence.value = parseInt(res["lorem-chrome-para"]);
   })
   .catch((err) => console.error(err))
 
 chrome.storage.local.get(["lorem-chrome-article"])
   .then((res) => {
-    console.log("start: ", res["lorem-chrome-article"]);
     numParagraph.value = parseInt(res["lorem-chrome-article"]);
   })
   .catch((err) => console.error(err))
@@ -82,7 +79,7 @@ const warning = (str) => {
   let el = document.createElement('span');
   el.innerText = str;
   el.className = 'warning';
-  console.log("Error: " + str);
+  console.error("Error: " + str);
   container.innerText = '';
   container.appendChild(el);
 }
@@ -92,8 +89,7 @@ const copyContent = async () => {
   let text = container.innerText
   try {
     await navigator.clipboard.writeText(text);
-    console.log('Content copied to clipboard');
-    console.log(text)
+    console.log('Content copied to clipboard: ', text);
   } catch (err) {
     console.error('Failed to copy: ', err);
   }
@@ -187,13 +183,10 @@ const generateArticle = (lipsum=false, n=5) => {
 //.. checkbox/input event listeners
 
 checkboxLipsum.addEventListener("click", () => {
-  console.log(checkboxLipsum.checked)
   chrome.storage.local.set(
     {"lorem-chrome-lipsum": (checkboxLipsum.checked).toString()},
     () => {
       chrome.storage.local.get(["lorem-chrome-lipsum"])
-        .then((res) => console.log("Value is " + JSON.stringify(res)))
-      console.log("Done")
     }
   );
 })
