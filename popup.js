@@ -25,6 +25,7 @@ const buttonTitle = document.getElementById('buttonTitle')
 const buttonParagraph = document.getElementById('buttonParagraph')
 const buttonArticle = document.getElementById('buttonArticle')
 const buttonCopy = document.getElementById('buttonCopy')
+const buttonDefault = document.getElementById('buttonDefault')
 
 //.. set defaults functions
 
@@ -48,6 +49,17 @@ chrome.storage.local.get(["lorem-chrome-article"])
     numParagraph.value = parseInt(res["lorem-chrome-article"]);
   })
   .catch((err) => console.error(err))
+
+buttonDefault.addEventListener(("click"), () => {
+  chrome.storage.local.set({
+    "lorem-chrome-lipsum": "false", 
+    "lorem-chrome-para": "7", 
+    "lorem-chrome-article": "5"
+  })
+  checkboxLipsum.checked = false
+  numSentence.value = "7"
+  numParagraph.value = "5"
+})
 
 
 //.. helper functions
