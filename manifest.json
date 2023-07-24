@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Simple Lorem Ipsum",
-  "version": "0.0.0.1",
+  "version": "1.2.0",
   "description": "Simple Lorem Ipsum generator for easy access to dummy text during user testing.",
   "icons": {
     "16": "images/icon-81.png",
