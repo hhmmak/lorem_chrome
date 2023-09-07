@@ -11,6 +11,7 @@ const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut',
 //.. DOM elements
 
 // user input
+const checkboxCopy = document.getElementById('copyDefault')
 const checkboxLipsum = document.getElementById('startWithLorem')
 const numSentence = document.getElementById('numSentence')
 const numParagraph = document.getElementById('numParagraph')
@@ -28,6 +29,12 @@ const buttonCopy = document.getElementById('buttonCopy')
 const buttonDefault = document.getElementById('buttonDefault')
 
 //.. set defaults functions
+
+chrome.storage.local.get(["lorem-chrome-copy"])
+  .then((res) => {
+    checkboxCopy.checked = res["lorem-chrome-copy"] === "true"
+  })
+  .catch((err) => console.error(err))
 
 chrome.storage.local.get(["lorem-chrome-lipsum"])
   .then((res) => {
@@ -47,12 +54,15 @@ chrome.storage.local.get(["lorem-chrome-article"])
   })
   .catch((err) => console.error(err))
 
+// reset to default
 buttonDefault.addEventListener(("click"), () => {
   chrome.storage.local.set({
+    "lorem-chrome-copy": "false", 
     "lorem-chrome-lipsum": "false", 
     "lorem-chrome-para": "7", 
     "lorem-chrome-article": "5"
   })
+  checkboxCopy.checked = false
   checkboxLipsum.checked = false
   numSentence.value = "7"
   numParagraph.value = "5"
@@ -186,7 +196,16 @@ checkboxLipsum.addEventListener("click", () => {
   chrome.storage.local.set(
     {"lorem-chrome-lipsum": (checkboxLipsum.checked).toString()},
     () => {
-      chrome.storage.local.get(["lorem-chrome-lipsum"])
+      chrome.storage.local.get(["lorem-chrome-lipsum"]);
+    }
+  );
+})
+
+checkboxCopy.addEventListener("click", () => {
+  chrome.storage.local.set(
+    {"lorem-chrome-copy": (checkboxCopy.checked).toString()},
+    () => {
+      chrome.storage.local.get(["lorem-chrome-copy"]);
     }
   );
 })
@@ -197,10 +216,16 @@ checkboxLipsum.addEventListener("click", () => {
 
 buttonSentence.addEventListener("click", () => {
   container.innerText = generateSentence(checkboxLipsum.checked);
+  if (checkboxCopy.checked){
+    copyContent();
+  }
 })
 
 buttonTitle.addEventListener("click", () => {
   container.innerText = generateTitle(checkboxLipsum.checked);
+  if (checkboxCopy.checked){
+    copyContent();
+  }
 })
 
 buttonParagraph.addEventListener("click", () => {
@@ -209,6 +234,9 @@ buttonParagraph.addEventListener("click", () => {
   } else {
     chrome.storage.local.set({"lorem-chrome-para": numSentence.value})
     container.innerText = generateParagraph(checkboxLipsum.checked, numSentence.valueAsNumber);
+    if (checkboxCopy.checked){
+      copyContent();
+    }
   }
 })
 
@@ -218,6 +246,9 @@ buttonArticle.addEventListener("click", () => {
   } else {
     chrome.storage.local.set({"lorem-chrome-article": numParagraph.value})
     container.innerText = generateArticle(checkboxLipsum.checked, numParagraph.valueAsNumber);
+    if (checkboxCopy.checked){
+      copyContent();
+    }
   }
 })
 
