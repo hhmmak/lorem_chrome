@@ -5,14 +5,14 @@
   font-family: 'Archivo', sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
-  color: #fefefe;
+  color: #EAE0D5;
 }
 
 body {
   width: 358px;
   padding: 0.8rem;
-  border: 2px solid #a0a0a0;
-  background-color: #202020;
+  border: 2px solid #C6AC8F;
+  background-color: #22333B;
 }
 
 h1 {
@@ -22,20 +22,31 @@ h1 {
 button {
   width: 10rem;
   padding: 0.5rem;
-  background-color: #202020;
-  border: 2px solid #909090;
+  background-color: #0F161A;
+  border: 1px solid #0F161A;
   border-radius: 0.5rem;
 }
 
 button:hover {
-  background-color: #909090;
-  border: 2px solid #909090;
+  background-color: #C6AC8F;
+  border: 1px solid #C6AC8F;
+  color: #0F161A;
+}
+
+.option-false {
+  background-color: #5E503F;
+  color:#EAE0D5;
+}
+
+.option-true {
+  background-color: #C6AC8F;
+  color:#0F161A;
 }
 
 input {
   padding: 0.5rem 0.3rem;
   text-indent: 0.2rem;
-  background-color: #fefefe;
+  background-color: #EAE0D5;
   border-radius: 0.5rem;
   color: #0f0f0f;
 }
@@ -47,7 +58,7 @@ input[type="checkbox"] {
 
 input:focus-visible {
   outline: none;
-  border: 2px solid #a0a0a0;
+  border: 2px solid #C6AC8F;
 }
 
 .font-lorem {
@@ -73,9 +84,9 @@ input:focus-visible {
 #result {
   margin: 0.5rem 0;
   padding: 0.5rem;
-  border: 2px solid #a0a0a0;
+  border: 2px solid #C6AC8F;
   border-radius: 0.5rem;
-  background-color: #ffffff;
+  background-color: #EAE0D5;
   color: #0f0f0f;
   height: 150px;
   width: 95%;
@@ -85,6 +96,6 @@ input:focus-visible {
 }
 
 .warning {
-  color: #ff4040;
+  color: #BC7272;
   font-weight: 600;
 }
