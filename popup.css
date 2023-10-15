@@ -12,7 +12,8 @@ body {
   width: 358px;
   padding: 0.8rem;
   border: 2px solid #C6AC8F;
-  background-color: #22333B;
+  border-radius: 5px;
+  background-color: #0F161A;
 }
 
 h1 {
@@ -20,27 +21,15 @@ h1 {
 }
 
 button {
-  width: 10rem;
-  padding: 0.5rem;
-  background-color: #0F161A;
-  border: 1px solid #0F161A;
-  border-radius: 0.5rem;
+  background-color: #22333B;
+  border: 2px solid #22333B;
+  cursor: pointer
 }
 
 button:hover {
   background-color: #C6AC8F;
-  border: 1px solid #C6AC8F;
-  color: #0F161A;
-}
-
-.option-false {
-  background-color: #5E503F;
-  color:#EAE0D5;
-}
-
-.option-true {
-  background-color: #C6AC8F;
-  color:#0F161A;
+  border: 2px solid #C6AC8F;
+  color: #5E503F;
 }
 
 input {
@@ -48,12 +37,7 @@ input {
   text-indent: 0.2rem;
   background-color: #EAE0D5;
   border-radius: 0.5rem;
-  color: #0f0f0f;
-}
-
-input[type="checkbox"] {
-  width: 1.3rem;
-  height: 1.3rem;
+  color: #5E503F;
 }
 
 input:focus-visible {
@@ -70,11 +54,40 @@ input:focus-visible {
   margin: 1rem 0;
 }
 
+.default-option-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .option-wrapper {
-  margin: 0.8rem 0;
+  padding: 0.4rem 0;
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.input-wrapper {
+  width: 10rem;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.checkbox {
+  padding: 0.8rem;
+  background-color: #5E503F;
+  border: 3px solid #5E503F;
+  cursor: pointer
+}
+
+.checkbox-hidden {
+  display: none;
+}
+
+.checkbox-hidden:checked+.checkbox {
+  background-color: #C6AC8F;
+  border: 3px solid #5E503F;
+  color: #5E503F;
 }
 
 .result-wrapper {
@@ -87,12 +100,27 @@ input:focus-visible {
   border: 2px solid #C6AC8F;
   border-radius: 0.5rem;
   background-color: #EAE0D5;
-  color: #0f0f0f;
+  color: #5E503F;
   height: 150px;
   width: 95%;
   overflow-y: auto;
   white-space: pre-wrap;
   line-height: 1.3;
+}
+
+#result::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+#result::-webkit-scrollbar-track {
+  background: #C6AC8F;
+}
+
+#result::-webkit-scrollbar-thumb {
+  background: #5E503F;
+  border-left: 2px solid #C6AC8F;
+  -webkit-border-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .warning {
