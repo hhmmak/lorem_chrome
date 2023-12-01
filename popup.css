@@ -94,7 +94,8 @@ input::-webkit-inner-spin-button {
 .checkbox {
   background-color: #5E503F;
   border: 3px solid #5E503F;
-  cursor: pointer
+  cursor: pointer;
+  user-select: none;
 }
 
 .checkbox-wide {
