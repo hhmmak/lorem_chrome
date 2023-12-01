@@ -33,7 +33,7 @@ button:hover {
 }
 
 input {
-  padding: 0.5rem 0.3rem;
+  padding: 0.6rem;
   text-indent: 0.2rem;
   background-color: #EAE0D5;
   border-radius: 0.5rem;
@@ -43,6 +43,12 @@ input {
 input:focus-visible {
   outline: none;
   border: 2px solid #C6AC8F;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .font-lorem {
@@ -94,7 +100,7 @@ input:focus-visible {
   margin: 1.3rem 0 0 0;
 }
 
-#result {
+.result-show {
   margin: 0.5rem 0;
   padding: 0.5rem;
   border: 2px solid #C6AC8F;
@@ -108,15 +114,15 @@ input:focus-visible {
   line-height: 1.3;
 }
 
-#result::-webkit-scrollbar {
+.result-show::-webkit-scrollbar {
   width: 0.6rem;
 }
 
-#result::-webkit-scrollbar-track {
+.result-show::-webkit-scrollbar-track {
   background: #C6AC8F;
 }
 
-#result::-webkit-scrollbar-thumb {
+.result-show::-webkit-scrollbar-thumb {
   background: #5E503F;
   border-left: 2px solid #C6AC8F;
   -webkit-border-radius: 0.5rem;
@@ -126,4 +132,5 @@ input:focus-visible {
 .warning {
   color: #BC7272;
   font-weight: 600;
+  font-style: italic;
 }
