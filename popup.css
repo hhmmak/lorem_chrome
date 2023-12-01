@@ -92,10 +92,13 @@ input::-webkit-inner-spin-button {
 }
 
 .checkbox {
-  padding: 0.8rem;
   background-color: #5E503F;
   border: 3px solid #5E503F;
   cursor: pointer
+}
+
+.checkbox-wide {
+  padding: 0.8rem;
 }
 
 .checkbox-hidden {
