@@ -10,14 +10,19 @@ const word = ['dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'ut',
 
 //.. DOM elements
 
-// user input
+// checkbox
 const checkboxCopy = document.getElementById('copyDefault')
 const checkboxLipsum = document.getElementById('startWithLorem')
+const checkboxResult = document.getElementById('showResult')
+const labelResult = document.getElementById('labelResult')
+
+// user input
 const numSentence = document.getElementById('numSentence')
 const numParagraph = document.getElementById('numParagraph')
 
-//container
-const container = document.getElementById('result')
+//result container
+const containerResult = document.getElementById('result')
+const containerError = document.getElementById('error')
 
 // button
 const buttonWordCount = document.getElementById('buttonWordCount')
@@ -54,18 +59,35 @@ chrome.storage.local.get(["lorem-chrome-article"])
   })
   .catch((err) => console.error(err))
 
+chrome.storage.local.get(["lorem-chrome-result"])
+  .then((res) => {
+    checkboxResult.checked = res["lorem-chrome-result"] === "true"
+    if (checkboxResult.checked){
+      containerResult.className = "result-show";
+      labelResult.innerText = "Hide Generated Text"
+    } else {
+      containerResult.className = "result-hide";
+      labelResult.innerText = "Show Generated Text"
+    }
+  })
+  .catch((err) => console.error(err))
+
 // reset to default
 buttonDefault.addEventListener(("click"), () => {
   chrome.storage.local.set({
     "lorem-chrome-copy": "false", 
     "lorem-chrome-lipsum": "false", 
     "lorem-chrome-para": "7", 
-    "lorem-chrome-article": "5"
+    "lorem-chrome-article": "5",
+    "lorem-chrome-result": "false"
   })
   checkboxCopy.checked = false
   checkboxLipsum.checked = false
   numSentence.value = "7"
   numParagraph.value = "5"
+  checkboxResult.checked = false
+  containerResult.className = "result-hide";
+  labelResult.innerText = "Show Generated Text"
 })
 
 
@@ -90,13 +112,17 @@ const warning = (str) => {
   el.innerText = str;
   el.className = 'warning';
   console.error("Error: " + str);
-  container.innerText = '';
-  container.appendChild(el);
+  if (checkboxResult.checked){
+    containerResult.innerText = '';
+    containerResult.appendChild(el);
+  } else {
+    containerError.appendChild(el);
+  }
 }
 
 //.. copy function
 const copyContent = async () => {
-  let text = container.innerText
+  let text = containerResult.innerText
   try {
     await navigator.clipboard.writeText(text);
     console.log('Content copied to clipboard: ', text);
@@ -210,19 +236,35 @@ checkboxCopy.addEventListener("click", () => {
   );
 })
 
+checkboxResult.addEventListener("click", () => {
+  if (checkboxResult.checked){
+    containerResult.className = "result-show";
+    labelResult.innerText = "Hide Generated Text"
+  } else {
+    containerResult.className = "result-hide";
+    labelResult.innerText = "Show Generated Text"
+  }
+
+  chrome.storage.local.set(
+    {"lorem-chrome-result": (checkboxResult.checked).toString()},
+    () => {
+      chrome.storage.local.get(["lorem-chrome-result"]);
+    }
+  );
+})
 
 
 //.. button event listeners
 
 buttonSentence.addEventListener("click", () => {
-  container.innerText = generateSentence(checkboxLipsum.checked);
+  containerResult.innerText = generateSentence(checkboxLipsum.checked);
   if (checkboxCopy.checked){
     copyContent();
   }
 })
 
 buttonTitle.addEventListener("click", () => {
-  container.innerText = generateTitle(checkboxLipsum.checked);
+  containerResult.innerText = generateTitle(checkboxLipsum.checked);
   if (checkboxCopy.checked){
     copyContent();
   }
@@ -230,10 +272,11 @@ buttonTitle.addEventListener("click", () => {
 
 buttonParagraph.addEventListener("click", () => {
   if (numSentence.valueAsNumber < 1 || numSentence.valueAsNumber > 20) { 
-    warning('* Number of sentences per paragraph is limited to 1 to 20.');
+    warning('Fail: Number of sentences per paragraph is limited to 1 to 20.');
   } else {
     chrome.storage.local.set({"lorem-chrome-para": numSentence.value})
-    container.innerText = generateParagraph(checkboxLipsum.checked, numSentence.valueAsNumber);
+    containerError.innerHTML = "";
+    containerResult.innerText = generateParagraph(checkboxLipsum.checked, numSentence.valueAsNumber);
     if (checkboxCopy.checked){
       copyContent();
     }
@@ -242,10 +285,11 @@ buttonParagraph.addEventListener("click", () => {
 
 buttonArticle.addEventListener("click", () => {
   if (numParagraph.valueAsNumber < 1 || numParagraph.valueAsNumber > 10) {  
-    warning('* Number of paragraphs per article is limited to 1 to 10.');
+    warning('Fail: Number of paragraphs per article is limited to 1 to 10.');
   } else {
     chrome.storage.local.set({"lorem-chrome-article": numParagraph.value})
-    container.innerText = generateArticle(checkboxLipsum.checked, numParagraph.valueAsNumber);
+    containerError.innerHTML = "";
+    containerResult.innerText = generateArticle(checkboxLipsum.checked, numParagraph.valueAsNumber);
     if (checkboxCopy.checked){
       copyContent();
     }

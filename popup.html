@@ -14,11 +14,11 @@
 <body>
   <h1 class="font-lorem">Lorem Ipsum</h1>
   <div class="generator-wrapper">
-    <div class="default-option-wrapper">
+    <div class="option-wrapper-full">
       <div id="lorem-option" class="option-wrapper">
         <input type="checkbox" id="startWithLorem" class="checkbox-hidden">
         <label for="startWithLorem" class="input-wrapper checkbox">
-          Start with <span class="font-lorem">Lorem Ipusum</span>
+          Start with<span class="font-lorem">  Lorem Ipusum</span>
         </label>
       </div>
       <div id="lorem-option" class="option-wrapper">
@@ -46,13 +46,16 @@
         <label for="numParagraph" >paragaph(s) per article</label>
       </div>
     </div>
-  </div>
-  <div class="result-wrapper">
-    <div id="result"></div>
-    <div class="option-wrapper">
+    <div id="textbox-default-option" class="option-wrapper-full">
+      <input type="checkbox" id="showResult" class="checkbox-hidden">
+      <label for="showResult" id="labelResult" class="input-wrapper checkbox">
+        Show Generated Text
+      </label>
       <button id="buttonCopy" class="input-wrapper">Copy Text</button>
       <button id="buttonDefault" class="input-wrapper">Reset to Default</button>
     </div>
+    <div id="result"></div>
+    <div id="error"></div>
   </div>
 
   <script src="./popup.js" type="module"></script>

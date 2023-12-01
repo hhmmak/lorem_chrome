@@ -54,15 +54,18 @@ input::-webkit-inner-spin-button {
 .font-lorem {
   font-weight: 500;
   font-style: italic;
+  white-space: pre;
 }
 
 .generator-wrapper {
-  margin: 1rem 0;
+  margin: 1rem 0 0 0;
 }
 
-.default-option-wrapper {
+.option-wrapper-full {
+  padding: 0.4rem 0;
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .option-wrapper {
@@ -77,6 +80,15 @@ input::-webkit-inner-spin-button {
   padding: 0.5rem;
   text-align: center;
   border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  background-color: #22333B;
+  border: 2px solid #22333B;
+  cursor: pointer
 }
 
 .checkbox {
@@ -96,8 +108,12 @@ input::-webkit-inner-spin-button {
   color: #5E503F;
 }
 
-.result-wrapper {
-  margin: 1.3rem 0 0 0;
+#error-wrapper {
+  min-height: 20px;
+}
+
+.result-hide {
+  display: none;
 }
 
 .result-show {
