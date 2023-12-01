@@ -230,7 +230,7 @@ buttonTitle.addEventListener("click", () => {
 
 buttonParagraph.addEventListener("click", () => {
   if (numSentence.valueAsNumber < 1 || numSentence.valueAsNumber > 20) { 
-    warning('Number of sentences per paragraph is limited to 1 to 20.');
+    warning('* Number of sentences per paragraph is limited to 1 to 20.');
   } else {
     chrome.storage.local.set({"lorem-chrome-para": numSentence.value})
     container.innerText = generateParagraph(checkboxLipsum.checked, numSentence.valueAsNumber);
@@ -242,7 +242,7 @@ buttonParagraph.addEventListener("click", () => {
 
 buttonArticle.addEventListener("click", () => {
   if (numParagraph.valueAsNumber < 1 || numParagraph.valueAsNumber > 10) {  
-    warning('Number of paragraphs per article is limited to 1 to 10.');
+    warning('* Number of paragraphs per article is limited to 1 to 10.');
   } else {
     chrome.storage.local.set({"lorem-chrome-article": numParagraph.value})
     container.innerText = generateArticle(checkboxLipsum.checked, numParagraph.valueAsNumber);
