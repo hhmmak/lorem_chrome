@@ -1,0 +1,25 @@
+name: CD workflow
+
+on:
+  push:
+    branches:
+      - main
+    pull_request:
+
+jobs:
+  gather-files:
+    name: Gather files for compression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build .zip file
+              # only include all .json, images, .css, .html, .js files
+        run:  zip -r lorem_chrome_zip . -i "*.json" "*.png" "*.css" "*.html" "*.js"
+      
+      - name: Upload .zip (artifact)
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-archive-tabs-manager   # variable name for future workflow
+          path: lorem_chrome_zip   # path to .zip
