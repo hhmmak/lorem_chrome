@@ -22,5 +22,5 @@ jobs:
       - name: Upload .zip (artifact)
         uses: actions/upload-artifact@v3
         with:
-          name: test-archive-tabs-manager   # variable name for future workflow
-          path: ./lorem_chrome_zip.zip   # path to .zip
+          name: lorem-chrome-zip   # variable name for future workflow
+          path: ./lorem_chrome.zip   # path to .zip
