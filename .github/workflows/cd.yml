@@ -30,7 +30,7 @@ jobs:
     env:
       CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
-      CODE: 4/1AfJohXns4lL_11tuvhMCVFFVJChdIgBRuDLTOslz-ZSWBV1gYrQj2-lOqNY
+      CODE: ${{ secrets.OAUTH_AUTH_CODE }}
       $ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
 
     steps:
@@ -51,10 +51,4 @@ jobs:
       
       - name: upload updated package
         run: |-
-          curl \
-            -H "Authorization: Bearer $TOKEN"  \
-            -H "x-goog-api-version: 2" \
-            -X PUT \
-            -T "/home/runner/work/lorem_chrome/lorem_chrome/lorem_chrome.zip" \
-            -v \
-            https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
+          % curl -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T ./lorem-chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
