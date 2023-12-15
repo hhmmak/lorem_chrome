@@ -1,0 +1,59 @@
+name: CD workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  gather-files:
+    name: Gather files for compression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build .zip file
+              # only include all .json, images, .css, .html, .js files
+        run:  zip -r lorem_chrome . -i "*.json" "*.png" "*.css" "*.html" "*.js"
+      
+      - name: Upload .zip (artifact)
+        uses: actions/upload-artifact@v3
+        with:
+          name: lorem-chrome-zip   # variable name for future workflow
+          path: ./lorem_chrome.zip   # path to .zip
+
+  upload-extension:
+    name: Upload updated extension
+    runs-on: ubuntu-latest
+    # needs: gather-files
+    env:
+      CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
+      CODE: 4/1AfJohXkrLiSsYVzarpAm3WjdwqRsqeFS6K1IKl6CVyiYpw-n4P6StEESFvM
+      $ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
+
+    steps:
+      - name: get archive
+        uses: actions/download-artifact@v4
+        with:
+          name: lorem-chrome-zip
+
+      - name: install dependencies
+        run: sudo apt-get -y install curl jq
+
+      - name: request access token
+        run: |-
+          TOKEN=$(curl "https://accounts.google.com/o/oauth2/token" -d \
+            "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&code=$CODE&grant_type=authorization_code&redirect_uri=urn:ietf:wg:oauth:2.0:oob"| jq -r '.refresh_token')
+          echo $TOKEN
+      
+      - name: upload updated package
+        run: |-
+          curl \
+            -H "Authorization: Bearer $TOKEN"  \
+            -H "x-goog-api-version: 2" \
+            -X PUT \
+            -T "./lorem_chrome.zip" \
+            -v \
+            https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
