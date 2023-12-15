@@ -31,7 +31,7 @@ jobs:
       CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
       CODE: ${{ secrets.OAUTH_AUTH_CODE }}
-      $ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
+      ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
 
     steps:
       - name: get archive
