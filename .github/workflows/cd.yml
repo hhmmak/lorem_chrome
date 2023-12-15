@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - workflow
 
 jobs:
   gather-files:
@@ -31,13 +30,30 @@ jobs:
     env:
       CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
-      CODE: 4/1AfJohXna7V2JZJY0mK3xGlwpqgH2NiTIc1SA7GZIJR5LB7U9V3ol8K9j_uw
+      CODE: 4/1AfJohXkrLiSsYVzarpAm3WjdwqRsqeFS6K1IKl6CVyiYpw-n4P6StEESFvM
+      $ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
+
     steps:
+      - name: get archive
+        uses: actions/download-artifact@v4
+        with:
+          name: lorem-chrome-zip
+
       - name: install dependencies
         run: sudo apt-get -y install curl jq
 
       - name: request access token
         run: |-
-          curl "https://accounts.google.com/o/oauth2/token" -d \
-            "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&code=$CODE&grant_type=authorization_code&redirect_uri=urn:ietf:wg:oauth:2.0:oob"
-          
+          TOKEN=$(curl "https://accounts.google.com/o/oauth2/token" -d \
+            "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&code=$CODE&grant_type=authorization_code&redirect_uri=urn:ietf:wg:oauth:2.0:oob"| jq -r '.refresh_token')
+          echo $TOKEN
+      
+      - name: upload updated package
+        run: |-
+          curl \
+            -H "Authorization: Bearer $TOKEN"  \
+            -H "x-goog-api-version: 2" \
+            -X PUT \
+            -T "./lorem_chrome.zip" \
+            -v \
+            https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
