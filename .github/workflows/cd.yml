@@ -30,7 +30,7 @@ jobs:
     env:
       CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
-      CODE: 4/1AfJohXmyogIo0Z0UTnzpa9yvndOtq8B4k93E9sjVsXwNqmyZXe_InTZBqbQ
+      CODE: 4/1AfJohXkvnE1Q_ylW_sdSLZuXIpu8o6eBBTuadguvy92KoeiIwalHe2nz9K4
       $ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
 
     steps:
@@ -44,9 +44,10 @@ jobs:
 
       - name: request access token
         run: |-
-          TOKEN=$(curl "https://accounts.google.com/o/oauth2/token" -d \
+          access_token=$(curl "https://accounts.google.com/o/oauth2/token" -d \
             "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&code=$CODE&grant_type=authorization_code&redirect_uri=urn:ietf:wg:oauth:2.0:oob"| jq -r '.refresh_token')
-          echo $TOKEN
+          echo "$access_token"
+          echo "TOKEN=$access_token" >> "$GITHUB_ENV"
       
       - name: upload updated package
         run: |-
