@@ -49,6 +49,9 @@ jobs:
           echo "::add-mask::$access_token"
           echo "TOKEN=$access_token" >> "$GITHUB_ENV"
       
+      - name: show file paths
+        run: ls -f
+      
       - name: upload updated package
         run: |-
           curl -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T ./lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
