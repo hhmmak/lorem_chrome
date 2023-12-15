@@ -30,7 +30,7 @@ jobs:
     env:
       CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
-      CODE: 4/1AfJohXkAUL_zyFup-zcOdUwtj-7LUJhw4oIW1_rsD1D5q-KMrB-UfNakguM
+      CODE: 4/1AfJohXmk5QRb4LIQxfvZYDAtTR6TZidH43IXgbncAm0Hj36frQBThnTD3jY
       $ITEM_ID: olodidcpphiodigfnkhhpeadpgnkgcmm
 
     steps:
@@ -55,6 +55,6 @@ jobs:
             -H "Authorization: Bearer $TOKEN"  \
             -H "x-goog-api-version: 2" \
             -X PUT \
-            -T "./lorem_chrome.zip" \
+            -T "lorem_chrome.zip" \
             -v \
             https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
