@@ -46,9 +46,9 @@ jobs:
         run: |-
           access_token=$(curl "https://accounts.google.com/o/oauth2/token" -d \
             "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&code=$CODE&grant_type=authorization_code&redirect_uri=urn:ietf:wg:oauth:2.0:oob"| jq -r '.access_token')
-          echo "$access_token"
-          echo "::add-mask::TOKEN=$access_token" >> "$GITHUB_ENV"
+          echo "::add-mask::$access_token"
+          echo "TOKEN=$access_token" >> "$GITHUB_ENV"
       
       - name: upload updated package
         run: |-
-          % curl -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T ./lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
+          curl -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T ./lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
