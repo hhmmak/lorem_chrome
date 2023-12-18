@@ -13,7 +13,7 @@ Additional functions:
 - Save previous generator preferences
 - Reset preferences to default on "Reset to Default" button
 
-Distributed on https://chrome.google.com/webstore/detail/simple-lorem-ipsum/olodidcpphiodigfnkhhpeadpgnkgcmm
+Distributed on [https://chrome.google.com/webstore/detail/simple-lorem-ipsum/olodidcpphiodigfnkhhpeadpgnkgcmm](https://chromewebstore.google.com/detail/simple-lorem-ipsum/olodidcpphiodigfnkhhpeadpgnkgcmm)
 
 ## Color Palette
 
