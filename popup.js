@@ -79,15 +79,15 @@ buttonDefault.addEventListener(("click"), () => {
     "lorem-chrome-lipsum": "false", 
     "lorem-chrome-para": "7", 
     "lorem-chrome-article": "5",
-    "lorem-chrome-result": "false"
+    "lorem-chrome-result": "true"
   })
   checkboxCopy.checked = false
   checkboxLipsum.checked = false
   numSentence.value = "7"
   numParagraph.value = "5"
-  checkboxResult.checked = false
-  containerResult.className = "result-hide";
-  labelResult.innerText = "Show Generated Text"
+  checkboxResult.checked = true
+  containerResult.className = "result-show";
+  labelResult.innerText = "Hide Generated Text"
 })
 
 
