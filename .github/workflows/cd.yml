@@ -55,10 +55,9 @@ jobs:
       - name: upload updated package
         id: upload-package
         run: |-
-          response=$(curl -w "%{http_code}\\n" -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID | jq -r '.'
+          response=$(curl -w "%{http_code}\\n" -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID)
           result_status=$(echo $PATCH | tail -n 1)
           result_body=$(echo "$result" | sed \$d | jq -r '.' )
           if [$result_status!="200"]; then
             echo $result_body
             exit 1
-
