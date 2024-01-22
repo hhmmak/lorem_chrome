@@ -3,7 +3,7 @@ name: CD workflow
 on:
   push:
     branches:
-      - main
+      - add-PR-check
 
 jobs:
   gather-files:
@@ -53,5 +53,12 @@ jobs:
         run: ls -r
       
       - name: upload updated package
+        id: upload-package
         run: |-
-          curl -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID
+          response=${curl -w "%{http_code}\\n" -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID | jq -r '.'
+          result_status=$(echo $PATCH | tail -n 1)
+          result_body=$(echo "$result" | sed \$d | jq -r '.' )
+          if [$result_status!="200"]; then
+            echo $result_body
+            exit 1
+
