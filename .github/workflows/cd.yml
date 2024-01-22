@@ -56,8 +56,4 @@ jobs:
         id: upload-package
         run: |-
           response=$(curl -w "%{http_code}\\n" -H "Authorization: Bearer $TOKEN" -H "x-goog-api-version: 2" -X PUT -T lorem_chrome.zip -v https://www.googleapis.com/upload/chromewebstore/v1.1/items/$ITEM_ID)
-          response_status=$(echo "$response" | tail -n 1)
-          response_body=$(echo "$response" | sed \$d | jq -r '.' )
-          if [$response_status!="200"]; then
-            echo $result_body
-            exit 1
+          echo $response
