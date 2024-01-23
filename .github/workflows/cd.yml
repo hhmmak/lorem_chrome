@@ -60,6 +60,12 @@ jobs:
           response_body=$(echo "$response" | sed \$d | jq -r '.' )
           echo "$response_status"
           if [ "$response_status" != "200" ]; then
-            echo $response_body
+            error_message=$(echo "$response_body" | jq -r '.error.message')
+            error_details=$(echo "$response_body" | jq -r '.error.errors')
+            error_status=${echo "$response_body" | jq -r '.error.status'}
+            echo "Code: $response_status"
+            echo "Details: $error_details"
+            echo "Status: $error_status"
+            echo "Message: $error_message"
             exit 1
           fi
