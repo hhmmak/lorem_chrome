@@ -60,6 +60,6 @@ jobs:
           response_body=$(echo "$response" | sed \$d | jq -r '.' )
           echo "$response_status"
           if [$response_status!="200"]; then
-            echo $result_body
+            echo $response_body
             exit 1
           fi
