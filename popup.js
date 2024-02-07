@@ -184,7 +184,7 @@ const generateTitle = (lipsum=false, n=10) => {
 }
 
 const generateParagraph = (lipsum=false, n=7) => {
-  if (n < 1 || n > 20)  return 'Number of sentences per paragraph is limited to 1 to 20.';
+  if (isNaN(n) || n < 1 || n > 20)  return 'Number of sentences per paragraph is limited to 1 to 20.';
 
   let paragraph = [];
   let maxLength = 1000;
@@ -206,7 +206,7 @@ const generateParagraph = (lipsum=false, n=7) => {
 }
 
 const generateArticle = (lipsum=false, n=5) => {
-  if (n < 1 || n > 10)  return 'Number of paragraphs per article is limited to 1 to 10.';
+  if (isNaN(n) || n < 1 || n > 10)  return 'Number of paragraphs per article is limited to 1 to 10.';
 
   let article = new Array(n);
   article[0] = generateParagraph(lipsum);
