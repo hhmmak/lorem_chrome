@@ -87,6 +87,7 @@ buttonDefault.addEventListener(("click"), () => {
   numParagraph.value = "5"
   checkboxResult.checked = true
   containerResult.className = "result-show";
+  containerResult.innerText = '';
   labelResult.innerText = "Hide Generated Text"
 })
 
