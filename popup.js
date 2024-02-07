@@ -49,13 +49,13 @@ chrome.storage.local.get(["lorem-chrome-lipsum"])
 
 chrome.storage.local.get(["lorem-chrome-para"])
   .then((res) => {
-    numSentence.value = parseInt(res["lorem-chrome-para"]);
+    numSentence.value = parseInt(res["lorem-chrome-para"]) || 7;
   })
   .catch((err) => console.error(err))
 
 chrome.storage.local.get(["lorem-chrome-article"])
   .then((res) => {
-    numParagraph.value = parseInt(res["lorem-chrome-article"]);
+    numParagraph.value = parseInt(res["lorem-chrome-article"]) || 5;
   })
   .catch((err) => console.error(err))
 
@@ -87,6 +87,7 @@ buttonDefault.addEventListener(("click"), () => {
   numParagraph.value = "5"
   checkboxResult.checked = true
   containerResult.className = "result-show";
+  containerResult.innerText = '';
   labelResult.innerText = "Hide Generated Text"
 })
 
@@ -183,7 +184,7 @@ const generateTitle = (lipsum=false, n=10) => {
 }
 
 const generateParagraph = (lipsum=false, n=7) => {
-  if (n < 1 || n > 20)  return 'Number of sentences per paragraph is limited to 1 to 20.';
+  if (isNaN(n) || n < 1 || n > 20)  return 'Number of sentences per paragraph is limited to 1 to 20.';
 
   let paragraph = [];
   let maxLength = 1000;
@@ -205,7 +206,7 @@ const generateParagraph = (lipsum=false, n=7) => {
 }
 
 const generateArticle = (lipsum=false, n=5) => {
-  if (n < 1 || n > 10)  return 'Number of paragraphs per article is limited to 1 to 10.';
+  if (isNaN(n) || n < 1 || n > 10)  return 'Number of paragraphs per article is limited to 1 to 10.';
 
   let article = new Array(n);
   article[0] = generateParagraph(lipsum);
