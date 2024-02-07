@@ -49,13 +49,13 @@ chrome.storage.local.get(["lorem-chrome-lipsum"])
 
 chrome.storage.local.get(["lorem-chrome-para"])
   .then((res) => {
-    numSentence.value = parseInt(res["lorem-chrome-para"]);
+    numSentence.value = parseInt(res["lorem-chrome-para"]) || 7;
   })
   .catch((err) => console.error(err))
 
 chrome.storage.local.get(["lorem-chrome-article"])
   .then((res) => {
-    numParagraph.value = parseInt(res["lorem-chrome-article"]);
+    numParagraph.value = parseInt(res["lorem-chrome-article"]) || 5;
   })
   .catch((err) => console.error(err))
 
