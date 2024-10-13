@@ -23,6 +23,9 @@ const numParagraph = document.getElementById('numParagraph')
 //result container
 const containerResult = document.getElementById('result')
 const containerError = document.getElementById('error')
+const containerCharCount = document.getElementById('charCount')
+const containerCharNoSpcCount = document.getElementById('charNoSpcCount')
+const containerWordCount = document.getElementById('wordCount')
 
 // button
 const buttonWordCount = document.getElementById('buttonWordCount')
@@ -89,6 +92,7 @@ buttonDefault.addEventListener(("click"), () => {
   containerResult.className = "result-show";
   containerResult.innerText = '';
   labelResult.innerText = "Hide Generated Text"
+  resetCount()
 })
 
 
@@ -107,6 +111,27 @@ const capHead = (str) => {
   return str[0].toUpperCase() + str.slice(1)
 }
 
+const resetCount = () => {
+  containerCharCount.innerText = 0
+  containerCharNoSpcCount.innerText = 0
+  containerWordCount.innerText = 0
+}
+
+//.. character counter
+const countChar = (str) => {
+  //total character count
+  containerCharCount.innerText = str.length
+
+  // remove escape characters
+  const strNoEsc = str.replaceAll('\n\n', ' ')
+
+  // remove spaces
+  containerCharNoSpcCount.innerText = strNoEsc.replaceAll(/\s+/g, '').length
+
+  // word count
+  containerWordCount.innerText = strNoEsc.split(' ').length
+}
+
 //.. error warning
 const warning = (str) => {
   let el = document.createElement('span');
@@ -119,6 +144,7 @@ const warning = (str) => {
   } else {
     containerError.appendChild(el);
   }
+  resetCount();
 }
 
 //.. copy function
@@ -140,7 +166,7 @@ const generateSentence = (lipsum=false, n=20) => {
   let sentence = []
   let maxPhrase = 3;
 
-  while (maxPhrase > 0 && sentence[sentence.length - 1] !== '. '){  
+  while (maxPhrase > 0 && sentence[sentence.length - 1] !== '. '){
     let count = n;
     sentence.push(' ')
     while (count > 0 && sentence[sentence.length - 1] === ' '){
@@ -201,7 +227,8 @@ const generateParagraph = (lipsum=false, n=7) => {
     maxLength -= tempSentence.length;
     maxSentence --;
   }
-
+  // remove trailing space after last sentence
+  paragraph[paragraph.length - 1] = paragraph[paragraph.length - 1].slice(0, -1)
   return paragraph.join('');
 }
 
@@ -258,10 +285,11 @@ checkboxResult.addEventListener("click", () => {
 //.. button event listeners
 
 buttonSentence.addEventListener("click", () => {
-  containerResult.innerText = generateSentence(checkboxLipsum.checked);
+  containerResult.innerText = generateSentence(checkboxLipsum.checked).slice(0, -1);
   if (checkboxCopy.checked){
     copyContent();
   }
+  countChar(containerResult.innerText)
 })
 
 buttonTitle.addEventListener("click", () => {
@@ -269,6 +297,7 @@ buttonTitle.addEventListener("click", () => {
   if (checkboxCopy.checked){
     copyContent();
   }
+  countChar(containerResult.innerText)
 })
 
 buttonParagraph.addEventListener("click", () => {
@@ -281,6 +310,7 @@ buttonParagraph.addEventListener("click", () => {
     if (checkboxCopy.checked){
       copyContent();
     }
+    countChar(containerResult.innerText)
   }
 })
 
@@ -294,6 +324,7 @@ buttonArticle.addEventListener("click", () => {
     if (checkboxCopy.checked){
       copyContent();
     }
+    countChar(containerResult.innerText)
   }
 })
 

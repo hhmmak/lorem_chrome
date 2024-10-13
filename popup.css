@@ -112,10 +112,6 @@ input::-webkit-inner-spin-button {
   color: #5E503F;
 }
 
-#error-wrapper {
-  min-height: 20px;
-}
-
 .result-hide {
   display: none;
 }
