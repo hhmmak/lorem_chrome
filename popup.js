@@ -221,7 +221,8 @@ const generateParagraph = (lipsum=false, n=7) => {
     maxLength -= tempSentence.length;
     maxSentence --;
   }
-
+  // remove trailing space after last sentence
+  paragraph[n - 1] = paragraph[n - 1].slice(0, -1)
   return paragraph.join('');
 }
 
