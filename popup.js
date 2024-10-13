@@ -24,7 +24,6 @@ const numParagraph = document.getElementById('numParagraph')
 const containerResult = document.getElementById('result')
 const containerError = document.getElementById('error')
 const containerCharCount = document.getElementById('charCount')
-const containerCharNoEscCount = document.getElementById('charNoEscCount')
 const containerCharNoSpcCount = document.getElementById('charNoSpcCount')
 const containerWordCount = document.getElementById('wordCount')
 
@@ -114,14 +113,13 @@ const capHead = (str) => {
 //.. character counter
 const countChar = (str) => {
   //total character count
-  containerCharCount.innerText = str.replaceAll('\n', 'n').length
+  containerCharCount.innerText = str.length
 
   // remove escape characters
-  const strNoEsc = str.replaceAll(' \n\n', '')
-  containerCharNoEscCount.innerText = strNoEsc.length
+  const strNoEsc = str.replaceAll('\n\n', ' ')
 
   // remove spaces
-  containerCharNoSpcCount.innerText = strNoEsc.replaceAll(' ', '').length
+  containerCharNoSpcCount.innerText = strNoEsc.replaceAll(/\s+/g, '').length
 
   // word count
   containerWordCount.innerText = strNoEsc.split(' ').length
@@ -222,7 +220,7 @@ const generateParagraph = (lipsum=false, n=7) => {
     maxSentence --;
   }
   // remove trailing space after last sentence
-  paragraph[n - 1] = paragraph[n - 1].slice(0, -1)
+  paragraph[paragraph.length - 1] = paragraph[paragraph.length - 1].slice(0, -1)
   return paragraph.join('');
 }
 
@@ -279,7 +277,7 @@ checkboxResult.addEventListener("click", () => {
 //.. button event listeners
 
 buttonSentence.addEventListener("click", () => {
-  containerResult.innerText = generateSentence(checkboxLipsum.checked);
+  containerResult.innerText = generateSentence(checkboxLipsum.checked).slice(0, -1);
   if (checkboxCopy.checked){
     copyContent();
   }
@@ -291,6 +289,7 @@ buttonTitle.addEventListener("click", () => {
   if (checkboxCopy.checked){
     copyContent();
   }
+  countChar(containerResult.innerText)
 })
 
 buttonParagraph.addEventListener("click", () => {
@@ -303,6 +302,7 @@ buttonParagraph.addEventListener("click", () => {
     if (checkboxCopy.checked){
       copyContent();
     }
+    countChar(containerResult.innerText)
   }
 })
 
@@ -316,6 +316,7 @@ buttonArticle.addEventListener("click", () => {
     if (checkboxCopy.checked){
       copyContent();
     }
+    countChar(containerResult.innerText)
   }
 })
 
