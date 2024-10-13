@@ -92,9 +92,7 @@ buttonDefault.addEventListener(("click"), () => {
   containerResult.className = "result-show";
   containerResult.innerText = '';
   labelResult.innerText = "Hide Generated Text"
-  containerCharCount.innerText = 0
-  containerCharNoSpcCount.innerText = 0
-  containerWordCount.innerText = 0
+  resetCount()
 })
 
 
@@ -111,6 +109,12 @@ const randomWord = () => {
 
 const capHead = (str) => {
   return str[0].toUpperCase() + str.slice(1)
+}
+
+const resetCount = () => {
+  containerCharCount.innerText = 0
+  containerCharNoSpcCount.innerText = 0
+  containerWordCount.innerText = 0
 }
 
 //.. character counter
@@ -140,6 +144,7 @@ const warning = (str) => {
   } else {
     containerError.appendChild(el);
   }
+  resetCount();
 }
 
 //.. copy function
