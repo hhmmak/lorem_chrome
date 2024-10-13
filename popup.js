@@ -23,6 +23,10 @@ const numParagraph = document.getElementById('numParagraph')
 //result container
 const containerResult = document.getElementById('result')
 const containerError = document.getElementById('error')
+const containerCharCount = document.getElementById('charCount')
+const containerCharNoEscCount = document.getElementById('charNoEscCount')
+const containerCharNoSpcCount = document.getElementById('charNoSpcCount')
+const containerWordCount = document.getElementById('wordCount')
 
 // button
 const buttonWordCount = document.getElementById('buttonWordCount')
@@ -107,6 +111,22 @@ const capHead = (str) => {
   return str[0].toUpperCase() + str.slice(1)
 }
 
+//.. character counter
+const countChar = (str) => {
+  //total character count
+  containerCharCount.innerText = str.replaceAll('\n', 'n').length
+
+  // remove escape characters
+  const strNoEsc = str.replaceAll(' \n\n', '')
+  containerCharNoEscCount.innerText = strNoEsc.length
+
+  // remove spaces
+  containerCharNoSpcCount.innerText = strNoEsc.replaceAll(' ', '').length
+
+  // word count
+  containerWordCount.innerText = strNoEsc.split(' ').length
+}
+
 //.. error warning
 const warning = (str) => {
   let el = document.createElement('span');
@@ -140,7 +160,7 @@ const generateSentence = (lipsum=false, n=20) => {
   let sentence = []
   let maxPhrase = 3;
 
-  while (maxPhrase > 0 && sentence[sentence.length - 1] !== '. '){  
+  while (maxPhrase > 0 && sentence[sentence.length - 1] !== '. '){
     let count = n;
     sentence.push(' ')
     while (count > 0 && sentence[sentence.length - 1] === ' '){
@@ -262,6 +282,7 @@ buttonSentence.addEventListener("click", () => {
   if (checkboxCopy.checked){
     copyContent();
   }
+  countChar(containerResult.innerText)
 })
 
 buttonTitle.addEventListener("click", () => {
