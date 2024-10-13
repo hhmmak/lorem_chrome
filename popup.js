@@ -92,6 +92,9 @@ buttonDefault.addEventListener(("click"), () => {
   containerResult.className = "result-show";
   containerResult.innerText = '';
   labelResult.innerText = "Hide Generated Text"
+  containerCharCount.innerText = 0
+  containerCharNoSpcCount.innerText = 0
+  containerWordCount.innerText = 0
 })
 
 
